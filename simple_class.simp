@@ -1,0 +1,10 @@
+class BaseModel {}
+
+class Blop extends BaseModel {
+    field int id = 3;
+}
+
+class Zone {
+    field Blop test;
+    field str name = "\"Charles Smith";
+}
