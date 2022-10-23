@@ -51,6 +51,9 @@ class SyntaxToken(Token):
     def __init__(self, symbol: Optional[str]):
         super().__init__(symbol, TokenTypes.SYNTAX)
 
+    def __repr__(self):
+        return f'{self.symbol}'
+
 
 class NameToken(Token):
     def __init__(self, symbol: Optional[str], name_type: NameTypes):

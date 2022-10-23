@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 from tokens import Token, KeywordToken, TypeToken, NameTypes, TokenTypes, NameToken, OperatorToken, SyntaxToken
 
@@ -19,7 +19,7 @@ class Lexer:
                 self._process_line(line)
 
     def is_delimiter_close(self, char: str, previous_char: str, closing_delimiter: str):
-        if previous_char == "\\":
+        if self.escaped(previous_char):
             return False
         if char == closing_delimiter:
             return True
@@ -62,7 +62,7 @@ class Lexer:
         in_delimiter: Optional[str] = None
 
         for char in line:
-            if char == '#':
+            if char == '#' and not in_delimiter:
                 return
 
             if char.isalnum() or char in '_':
@@ -74,6 +74,15 @@ class Lexer:
                 if len(self.tokens) > 0:
                     previous_token = self.tokens[-1]
 
+                # Process multi characters tokens (names, types and keywords)
+                if len(token_buff) > 0:
+                    if token_buff in self.keywords:
+                        self.on_keyword(char, previous_char, KeywordToken(token_buff), previous_token)
+                    elif token_buff in self.types:
+                        self.on_type(char, previous_char, TypeToken(token_buff), previous_token)
+                    else:
+                        self.on_name(char, previous_char, NameToken(token_buff, NameTypes.VALUE), previous_token)
+
                 # Process one character tokens (operators, syntax and delimiters)
                 if char in self.operators:
                     self.on_operator(char, previous_char, OperatorToken(char), previous_token)
@@ -84,15 +93,6 @@ class Lexer:
                         in_delimiter = char
                     else:
                         in_delimiter = None
-
-                # Process multi characters tokens (names, types and keywords)
-                if len(token_buff) > 0:
-                    if token_buff in self.keywords:
-                        self.on_keyword(char, previous_char, KeywordToken(token_buff), previous_token)
-                    elif token_buff in self.types:
-                        self.on_type(char, previous_char, TypeToken(token_buff), previous_token)
-                    else:
-                        self.on_name(char, previous_char, NameToken(token_buff, NameTypes.VALUE), previous_token)
 
                 token_buff = ''
                 if char.isalnum() or char == '_':

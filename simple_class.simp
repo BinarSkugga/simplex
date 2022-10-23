@@ -8,5 +8,5 @@ class Blop extends BaseModel {
 
 class Zone {
     field Blop test;
-    field str name = "\"Charles Smith";
+    field str name = "#\"Charles Smith";
 }
