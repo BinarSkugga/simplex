@@ -10,14 +10,16 @@ class Parser:
         pass
 
     def generate_dict(self, tokens: List[Token]):
-        tree = {t: {'index': i} for i, t in enumerate(tokens)
+        tree = {t: {'index': i, 'fields': [], 'parent': None} for i, t in enumerate(tokens)
                 if t.type == TokenTypes.NAME and t.name_type == NameTypes.CLASS}
 
         for class_token, sub_tree in tree.items():
             class_tokens = []
 
             in_class = False
-            for t in tokens[sub_tree['index']:]:
+            for i, t in enumerate(tokens[sub_tree['index']:]):
+                if t.type == TokenTypes.KEYWORD and t.symbol == 'extends':
+                    sub_tree['parent'] = tokens[sub_tree['index'] + i + 1]
                 if t.type == TokenTypes.SYNTAX and t.symbol == '{':
                     in_class = True
                     continue
@@ -28,7 +30,6 @@ class Parser:
             sub_tree['tokens'] = class_tokens
 
         for class_token, sub_tree in tree.items():
-            sub_tree['fields'] = []
             curr_line = []
             is_field = False
             for t in sub_tree['tokens']:
