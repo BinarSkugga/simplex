@@ -15,6 +15,7 @@ class NameTypes(IntEnum):
     CLASS = 1
     FIELD = 2
     VALUE = 3
+    IMPORT = 4
 
 
 class Token:

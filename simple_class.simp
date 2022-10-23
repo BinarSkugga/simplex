@@ -1,12 +1,13 @@
-class BaseModel {}
+with "import_me.simp";
 
+class BaseModel {}
 
 # bruh
 class Blop extends BaseModel {
     field int id = 3; # djkfhefwe
 }
 
-class Zone {
+class Zone extends Roger {
     field Blop test;
     field str name = "#\"Charles Smith";
 }

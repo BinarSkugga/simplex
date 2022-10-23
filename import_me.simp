@@ -1,0 +1,5 @@
+class Test {}
+
+class Roger extends Test {
+    field int age = 67;
+}

@@ -5,7 +5,7 @@ from tokens import Token, KeywordToken, TypeToken, NameTypes, TokenTypes, NameTo
 
 class Lexer:
     def __init__(self):
-        self.keywords = {'class', 'extends', 'field'}
+        self.keywords = {'class', 'extends', 'field', 'with'}
         self.types = {'int', 'float', 'str'}
         self.operators = {'='}
         self.syntax = {':', ';', '{', '}', '#'}
@@ -42,6 +42,10 @@ class Lexer:
             # Field keyword appear just before the type, so 2 places before
             if self.tokens[-2].type == TokenTypes.KEYWORD and self.tokens[-2].symbol == "field":
                 token.name_type = NameTypes.FIELD
+        elif previous_token.type == TokenTypes.KEYWORD and previous_token.symbol == 'with':
+            del self.tokens[-1]
+            self.process_file(token.symbol)
+            return
         self.tokens.append(token)
 
     def on_operator(self, char: str, previous_char: str, token: OperatorToken, previous_token: Token):

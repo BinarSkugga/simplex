@@ -50,6 +50,5 @@ lexer.process_file('simple_class.simp')
 
 print(lexer.tokens)
 
-
 parser = Parser()
 pprint(parser.generate_dict(lexer.tokens))
