@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from tests.tokens import Token, KeywordToken, TypeToken, NameTypes, TokenTypes, NameToken, OperatorToken, SyntaxToken
+from tokens import Token, KeywordToken, TypeToken, NameTypes, TokenTypes, NameToken, OperatorToken, SyntaxToken
 
 
 class Lexer:
@@ -8,7 +8,7 @@ class Lexer:
         self.keywords = {'class', 'extends', 'field'}
         self.types = {'int', 'float', 'str'}
         self.operators = {'='}
-        self.syntax = {':', ';', '{', '}'}
+        self.syntax = {':', ';', '{', '}', '#'}
         self.delimiters = {'"', "'"}
 
         self.tokens = []
@@ -62,6 +62,9 @@ class Lexer:
         in_delimiter: Optional[str] = None
 
         for char in line:
+            if char == '#':
+                return
+
             if char.isalnum() or char in '_':
                 token_buff += char
             elif in_delimiter is not None and not self.is_delimiter_close(char, previous_char, in_delimiter):

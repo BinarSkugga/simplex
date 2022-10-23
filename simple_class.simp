@@ -1,7 +1,9 @@
 class BaseModel {}
 
+
+# bruh
 class Blop extends BaseModel {
-    field int id = 3;
+    field int id = 3; # djkfhefwe
 }
 
 class Zone {

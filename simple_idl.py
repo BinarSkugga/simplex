@@ -1,8 +1,8 @@
 from pprint import pprint
 from typing import List
 
-from tests.lexer import Lexer
-from tests.tokens import TokenTypes, NameTypes, Token
+from lexer import Lexer
+from tokens import TokenTypes, NameTypes, Token
 
 
 class Parser:
@@ -47,6 +47,8 @@ class Parser:
 
 lexer = Lexer()
 lexer.process_file('simple_class.simp')
+
+print(lexer.tokens)
 
 
 parser = Parser()
