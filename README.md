@@ -1,7 +1,7 @@
 # simplex
 Simple Python IDL
 
-Heres what simple_class.simp will generate:
+Heres what simple_class.smx will generate:
 
 ```
 {
