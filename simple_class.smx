@@ -1,4 +1,4 @@
-with "import_me.simp";
+with "import_me.smx";
 
 class BaseModel {}
 

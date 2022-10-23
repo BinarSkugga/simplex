@@ -18,8 +18,9 @@ class Parser:
 
             in_class = False
             for i, t in enumerate(tokens[sub_tree['index']:]):
+                absolute_i = sub_tree['index'] + i
                 if t.type == TokenTypes.KEYWORD and t.symbol == 'extends':
-                    sub_tree['parent'] = tokens[sub_tree['index'] + i + 1]
+                    sub_tree['parent'] = tokens[absolute_i + 1]
                 if t.type == TokenTypes.SYNTAX and t.symbol == '{':
                     in_class = True
                     continue
@@ -47,7 +48,7 @@ class Parser:
 
 
 lexer = Lexer()
-lexer.process_file('simple_class.simp')
+lexer.process_file('simple_class.smx')
 
 print(lexer.tokens)
 
